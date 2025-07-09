@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "clean-out",
+      "type": "shell",
+      "command": "rm -rf out"
+    },
+    {
+      "label": "tsc: build",
+      "type": "shell",
+      "command": "tsc",
+      "group": "build",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "copy-wasm",
+      "type": "shell",
+      "command": "cp -R wasm/*.wasm out/"
+    },
+    {
+      "label": "build-and-copy-wasm",
+      "dependsOn": ["clean-out", "tsc: build", "copy-wasm"],
+      "dependsOrder": "sequence",
+      "group": "build"
+    }
+  ]
+}
