@@ -41,14 +41,21 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       try {
-        // 1. 解析代码
-        const parser = await initParser("swift"); // 支持其他语言需替换
+        // 1. 自动识别语言并解析代码
+        const fileName = editor.document.fileName;
+        let language = "swift";
+        if (fileName.endsWith(".c")) language = "c";
+        else if (fileName.endsWith(".cpp") || fileName.endsWith(".cc") || fileName.endsWith(".cxx")) language = "cpp";
+        else if (fileName.endsWith(".swift")) language = "swift";
+        // 也可扩展更多语言
+
+        const parser = await initParser(language);
         const code = editor.document.getText();
         const ast = parseCode(parser, code);
 
         // 2. 提取函数调用关系和控制流图
-        const callGraph = extractFunctionCalls(ast);
-        const cfg = buildCFG(ast);
+        const callGraph = extractFunctionCalls(ast, language);
+        const cfg = buildCFG(ast, language);
 
         // 3. 生成函数级故障树
         const funcTrees = new Map<string, FaultNode>();

@@ -9,7 +9,7 @@
     {
       "label": "tsc: build",
       "type": "shell",
-      "command": "tsc",
+      "command": "pnpm tsc",
       "group": "build",
       "problemMatcher": "$tsc"
     },
