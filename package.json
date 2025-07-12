@@ -6,10 +6,23 @@
   },
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "faultTreeAnalyzer.generateAll",
+          "when": "viewItem == faultTreeRoot",
+          "group": "inline"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "faultTreeAnalyzer.generate",
         "title": "生成故障树分析"
+      },
+      {
+        "command": "faultTreeAnalyzer.generateAll",
+        "title": "生成所有故障树分析"
       }
     ],
     "viewsContainers": {
